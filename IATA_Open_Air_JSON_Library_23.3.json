@@ -1,0 +1,1857 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "IATA Open Air JSON schema library",
+    "description": "[IATA Open API Working Group](https://www.iata.org/en/programs/workgroups/passenger-standards-conference/architecture-technology-strategy/#tab-2) aims to facilitate the creation of airline industry API standards and best practices based on open technology, open industry-owned data definitions. \n \n# API Standards \nThe group has developed the first industry adopted REST API Standards: [Open Air API standards and best practices](https://standards.atlassian.net/wiki/spaces/AIDM/pages/588873733/IATA+Open+Air+API+Best+Practices+Standards). \n\n# API Certification\nIATA Open Air certification process validates the compliance of APIs against the best practices. \n\n# Open Air JSON schema library\nThe Open Air JSON schema library is officially released and available to be consumed by any relevant industry parties in the API design. \n\nWe invite you to share your feedback on the schema library with openair@iata.org.\n\n## Objective\nAs part of best practices, data definition of the standard proprietary APIs are derived from the standard data model, to ensure consistency of definition with the other APIs. Open Air JSON schema library has been designed by the Open API group, as the source of standard data definition in JSON schema format.\n\nFor the consistency of data definition in the industry proprietary APIs, the IATA Open API working group has designed the procedure and specification to derive the JSON schema library from AIDM integrated model under the governance view, including all standard data entities and their definition. \n\n## AIDM\nIATA maintains the [Airline Industry standard Data Model (AIDM)](https://www.iata.org/en/programs/workgroups/passenger-standards-conference/architecture-technology-strategy/industry-data-model/), under the governance of [Change Management Group](https://www.iata.org/en/programs/workgroups/passenger-standards-conference/architecture-technology-strategy/#tab-1).\nThis Open Air JSON schema library represents the standard data model under the governance view of AIDM. \n\n## Consumption Guide\n\nDevelopers should read the [JSON schema library consumption guide](https://standards.atlassian.net/wiki/spaces/AIDM/pages/588873747/IATA+Open+Air+JSON+Library+Consumption+Guide) to understand how to use the standard schema objects in the proprietary API design and achieve the IATA Open Air certification. ",
+    "version": "23.3",
+    "contact": {
+      "email": "openair@iata.org",
+      "url": "https://www.iata.org/openapi",
+      "name": "IATA Open API team"
+    },
+    "license": {
+      "name": "IATA PSC Data Exchange Specific License",
+      "url": "https://standards.atlassian.net/wiki/spaces/AIDM/pages/574587169/IATA+PSC+Data+Exchange+Specific+License"
+    }
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "AccessGate": {
+        "title": "Access Gate",
+        "description": "A gate that allows access to or exit from a path to a transport vehicle.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "accessGateIdentifier",
+          "terminal"
+        ],
+        "properties": {
+          "aircraftDep": {
+            "title": "Each Access Gate",
+            "description": "A process preparing an aircraft for departure including acquiring baggage, checking in passengers, loading baggage and cargo onto the aircraft and preparing the aircraft up to when it is ready to depart the stand to begin the leg.",
+            "x-iata-$ref": "#/components/schemas/AircraftDep"
+          },
+          "terminal": {
+            "title": "Each Access Gate",
+            "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+            "x-iata-$ref": "#/components/schemas/Terminal"
+          }
+        }
+      },
+      "AccessGateIdentifier": {
+        "title": "Access Gate_ Identifier",
+        "description": "The Access gate identifier.",
+        "type": "string"
+      },
+      "Aircraft": {
+        "title": "Aircraft",
+        "description": "A transport vehicle which is certified as airworthy by a competent aeronautical authority.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Aircraft & Other Transport Vehicles",
+          "Aircraft Technical Details",
+          "Flights",
+          "Remarks",
+          "Shopping Criteria"
+        ],
+        "properties": {
+          "aircraftRegistrationIdentifier": {
+            "title": "Aircraft.Aircraft Registration Identifier",
+            "description": "The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. GBOAC, N46573, ZZ123.",
+            "$ref": "#/components/schemas/AircraftRegistrationIdentifier"
+          },
+          "flightLeg": {
+            "title": "Each Aircraft may be assigned to one or more Flight Leg",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/FlightLeg"
+            }
+          },
+          "iataAircraftType": {
+            "title": "Each Aircraft may be classified by one and only one IATA Aircraft Type",
+            "description": "A grouping of aircraft, defined in the SSIM RP 1761b, where aircraft sharing a family name, a common fuselage cross section and a common service character (e.g. Passenger, Cargo or Mixed Configuration) are recognized as independent groups.",
+            "$ref": "#/components/schemas/IataAircraftType"
+          },
+          "msnIdentifier": {
+            "title": "Aircraft.MSN Identifier",
+            "description": "Manufacturer's Serial Number. Unique ID assigned at the time of the manufacture of the aircraft and remains constant regardless of the civil registration.",
+            "$ref": "#/components/schemas/Identifier"
+          },
+          "name": {
+            "title": "Aircraft.Name",
+            "description": "A name that may be applied by an operator to a specific aircraft",
+            "$ref": "#/components/schemas/Name"
+          },
+          "otherIdentifier": {
+            "title": "Aircraft.Other Identifier",
+            "description": "An identifier utilized by an operator other than registration. This may be an abbreviated registration (e.g. last two characters) and may be painted on the external surface of the aircraft such as the tip of the tail fin, nose landing gear doors etc.",
+            "$ref": "#/components/schemas/Identifier"
+          },
+          "registrationGroupCode": {
+            "title": "Aircraft.Registration Group Code",
+            "description": "In certified documentation individual or groups of aircraft may be expressed in common sections. This is usually specified in the page header or footer and cross refers to an effective page.",
+            "$ref": "#/components/schemas/Code"
+          },
+          "tailNumberText": {
+            "title": "Aircraft.Tail Number Text",
+            "description": "Abbreviated version of the unique aircraft registration code, such as without country code. Also called 'Tail Number'",
+            "$ref": "#/components/schemas/Text"
+          }
+        }
+      },
+      "AircraftArrival": {
+        "title": "Aircraft Arrival",
+        "description": "A process handling the arrival of an aircraft from passenger disembarkation, baggage unloading and reuniting passengers with their luggage.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "flightLeg"
+        ],
+        "properties": {
+          "arrivalBaggageHandlingBay": {
+            "title": "Each Aircraft Arrival",
+            "description": "The area where baggage is assembled as soon as the luggage is removed from an aircraft.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/BaggageHandlingBay"
+            }
+          },
+          "flightLeg": {
+            "title": "Each Aircraft Arrival",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "x-iata-$ref": "#/components/schemas/FlightLeg"
+          },
+          "terminal": {
+            "title": "Each Aircraft Arrival",
+            "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+            "$ref": "#/components/schemas/Terminal"
+          },
+          "terminalPier": {
+            "title": "Each Aircraft Arrival",
+            "description": "A raised structure, including bridge and building supports and walkways, typically supported by widely spread piles or pillars.",
+            "$ref": "#/components/schemas/TerminalPier"
+          },
+          "terminalSatellite": {
+            "title": "Each Aircraft Arrival",
+            "description": "A section, open space, or building inside an airport terminal or at its periphery, providing access to the planes through gates.",
+            "$ref": "#/components/schemas/TerminalSatellite"
+          },
+          "transportVehicleParkingPosition": {
+            "title": "Each Aircraft Arrival",
+            "description": "A recognized location where a transport vehicle may halt and stay temporarily in order to allow loading, offloading and / or servicing such as refueling and turn around.",
+            "$ref": "#/components/schemas/TransportVehicleParkingPosition"
+          }
+        }
+      },
+      "AircraftDep": {
+        "title": "Aircraft Departure",
+        "description": "A process preparing an aircraft for departure including acquiring baggage, checking in passengers, loading baggage and cargo onto the aircraft and preparing the aircraft up to when it is ready to depart the stand to begin the leg.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "earliestCheckInDateTime",
+          "flightLeg"
+        ],
+        "properties": {
+          "boardingGate": {
+            "title": "Each Aircraft Departure",
+            "description": "A gate that allows access to or exit from a path to a transport vehicle.",
+            "$ref": "#/components/schemas/AccessGate"
+          },
+          "checkInDesk": {
+            "title": "Each Aircraft Departure",
+            "description": "A counter in an airport at which a passenger may check in.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/CheckInDesk"
+            }
+          },
+          "depBaggageHandlingBay": {
+            "title": "Each Aircraft Departure",
+            "description": "The area where baggage is assembled prior to it being loaded onto an aircraft.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/BaggageHandlingBay"
+            }
+          },
+          "depTerminal": {
+            "title": "Each Aircraft Departure",
+            "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+            "$ref": "#/components/schemas/Terminal"
+          },
+          "earliestCheckInDateTime": {
+            "title": "Aircraft Departure",
+            "description": "The earliest date and time a passenger can check-in.",
+            "$ref": "#/components/schemas/DateTime"
+          },
+          "flightLeg": {
+            "title": "Each Aircraft Departure",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "x-iata-$ref": "#/components/schemas/FlightLeg"
+          },
+          "terminalPier": {
+            "title": "Each Aircraft Departure",
+            "description": "A raised structure, including bridge and building supports and walkways, typically supported by widely spread piles or pillars.",
+            "$ref": "#/components/schemas/TerminalPier"
+          },
+          "terminalSatellite": {
+            "title": "Each Aircraft Departure",
+            "description": "A section, open space, or building inside an airport terminal or at its periphery, providing access to the planes through gates.",
+            "$ref": "#/components/schemas/TerminalSatellite"
+          },
+          "transportVehicleParkingPosition": {
+            "title": "Each Aircraft Departure",
+            "description": "A recognized location where a transport vehicle may halt and stay temporarily in order to allow loading, offloading and / or servicing such as refueling and turn around.",
+            "$ref": "#/components/schemas/TransportVehicleParkingPosition"
+          }
+        }
+      },
+      "AircraftRegistrationIdentifier": {
+        "title": "Aircraft Registration_ Identifier",
+        "description": "The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. G-BOAC, N46573, ZZ123.",
+        "type": "string"
+      },
+      "Airline": {
+        "title": "Airline",
+        "description": "An organization operating aircraft for commercial purposes that offers air transport services to the public for carriage of passengers, mail and/or cargo and is certified for such purposes by the civil aviation authority of the state in which it is established.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "airlineAccountingCode",
+          "airlineDesigCode",
+          "airlineName",
+          "duplicateDesigInd"
+        ],
+        "properties": {
+          "airlineAccountingCode": {
+            "title": "Airline",
+            "description": "IATA assigned numerical code of three digits. Used to identify airlines for the purpose of financial reporting, ticketing and settlement. For example: Lufthansa has been assigned 220.",
+            "$ref": "#/components/schemas/Code"
+          },
+          "airlineDesigCode": {
+            "title": "Airline",
+            "description": "The ICAO-defined 3-character code or IATA-defined 2-character code assigned to the airline.",
+            "$ref": "#/components/schemas/AirlineDesigCode"
+          },
+          "airlineName": {
+            "title": "Airline",
+            "description": "The commercial name under which the airline trades. For example: British Airways, Swiss Air.",
+            "$ref": "#/components/schemas/ProperName"
+          },
+          "duplicateDesigInd": {
+            "title": "Airline",
+            "description": "Indicates that the airline designator code is a duplicate code shared by multiple carriers. In this case to uniquely identify the airline the airline name must be specified in addition to the airline designator code.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "flight": {
+            "title": "Each Airline",
+            "description": "A sequence of flight legs designed to meet the demands of the flight services operating under the same operational flight number, making efficient use of available aircraft for the repositioning of aircraft, and ensuring conformance with the use of flight numbers as defined by regulations.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/Flight"
+            }
+          },
+          "transportService": {
+            "title": "Each Airline",
+            "description": "A provision of carriage, predominately using aircraft, calling at one or more stations along a specific route.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportService"
+            }
+          }
+        }
+      },
+      "AirlineDesigCode": {
+        "title": "Airline Designator_ Code",
+        "description": "Either the IATA-defined 2-character code or the ICAO-defined 3-character code of an airline, as per the length of the value.",
+        "$ref": "#/components/schemas/AirlineDesigCodeEnum"
+      },
+      "AirlineDesigCodeEnum": {
+        "title": "Airline Designator Code",
+        "description": "The codelist contents of IATA Resolution 762 airline codes, or of ICAO airline codes.",
+        "type": "string",
+        "pattern": "^([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])$"
+      },
+      "Airport": {
+        "title": "Airport",
+        "description": "A facility where air transportation originates, stops and / or terminates, and where passengers and/or cargo can be taken on or off and/or maintenance, re-stocking or re-fueling takes place.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "airportIataLocationCode",
+          "stationName"
+        ],
+        "properties": {
+          "airportIataLocationCode": {
+            "title": "Airport",
+            "description": "Code assigned to an airport.",
+            "minItems": 1,
+            "maxItems": 2,
+            "$ref": "#/components/schemas/IataLocationCode"
+          },
+          "flightLeg": {
+            "title": "Each Airport",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/FlightLeg"
+            }
+          },
+          "inboundFlight": {
+            "title": "Each Inbound Flight may be the finish of one and only one Arrival Airport",
+            "description": "A sequence of flight legs designed to meet the demands of the flight services operating under the same operational flight number, making efficient use of available aircraft for the repositioning of aircraft, and ensuring conformance with the use of flight numbers as defined by regulations.",
+            "x-iata-$ref": "#/components/schemas/Flight"
+          },
+          "outboundFlight": {
+            "title": "Each Outbound Flight may be the start of one and only one Departure Airport",
+            "description": "A sequence of flight legs designed to meet the demands of the flight services operating under the same operational flight number, making efficient use of available aircraft for the repositioning of aircraft, and ensuring conformance with the use of flight numbers as defined by regulations.",
+            "x-iata-$ref": "#/components/schemas/Flight"
+          },
+          "outboundLeg": {
+            "title": "Each Outbound Leg may has one or more Departure Airports",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/FlightLeg"
+            }
+          },
+          "stationName": {
+            "title": "Airport",
+            "description": "Name of the airport. For example: George Bush Intercontinental Airport.",
+            "$ref": "#/components/schemas/StationName"
+          }
+        }
+      },
+      "BagDropDevice": {
+        "title": "Bag Drop Device",
+        "description": "A piece of equipment provided to allow checked-in luggage to be handed over to baggage handling. May be used as a self-service device or be used by a manned check-in desk.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "bagDropDeviceIdentifier"
+        ],
+        "properties": {
+          "bagDropDeviceIdentifier": {
+            "title": "Bag Drop Device.Bag Drop Device Identifier",
+            "description": "The identifier of the bag drop device.",
+            "$ref": "#/components/schemas/Identifier"
+          },
+          "checkInArea": {
+            "title": "Each Bag Drop Device may be located within one and only one Check-In Area",
+            "description": "A place provided where facilities exist enabling passengers and / or their luggage to be checked-in.",
+            "x-iata-$ref": "#/components/schemas/CheckInArea"
+          }
+        }
+      },
+      "BaggageHandlingBay": {
+        "title": "Baggage Handling Bay",
+        "description": "An infrastructure facility in a recessed, enclosed or bounded area for baggage handling.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "baggageHandlingBayIdentifier",
+          "station"
+        ],
+        "properties": {
+          "aircraftArrival": {
+            "title": "Each Baggage Handling Bay",
+            "description": "An area where baggage is assembled as soon as the luggage is removed from an aircraft.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftArrival"
+            }
+          },
+          "aircraftDep": {
+            "title": "Each Baggage Handling Bay",
+            "description": "An area where baggage is assembled prior to it being loaded onto an aircraft.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftDep"
+            }
+          },
+          "baggageHandlingBayIdentifier": {
+            "title": "Baggage Handling Bay",
+            "description": "The identifier of the baggage handling bay.",
+            "$ref": "#/components/schemas/BaggageHandlingBayIdentifier"
+          },
+          "station": {
+            "title": "Each Baggage Handling Bay",
+            "description": "A location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.",
+            "x-iata-$ref": "#/components/schemas/Station"
+          }
+        }
+      },
+      "BaggageHandlingBayIdentifier": {
+        "title": "Baggage Handling Bay_ Identifier",
+        "description": "The Baggage handling bay identifier of the infrastructure facility. #A redefined Handling Bay_ Identifier",
+        "type": "string"
+      },
+      "Carrier": {
+        "title": "Carrier",
+        "description": "An organization of any kind which provides transportation services for the conveyance of passengers, mail and/or cargo.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "carrierDesigCode",
+          "duplicateDesigInd",
+          "name"
+        ],
+        "properties": {
+          "carrierDesigCode": {
+            "title": "Carrier",
+            "description": "The ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo.",
+            "$ref": "#/components/schemas/AirlineDesigCode"
+          },
+          "defaultVolumeUnitCode": {
+            "title": "Carrier",
+            "description": "The volume unit of measure to be used in any and all business interactions with the carrier unless specified otherwise.",
+            "$ref": "#/components/schemas/VolumeUnitCode"
+          },
+          "defaultWeightUnitCode": {
+            "title": "Carrier",
+            "description": "The weight unit of measure to be used in any and all business interactions with the carrier unless specified otherwise.",
+            "$ref": "#/components/schemas/WeightUnitCode"
+          },
+          "duplicateDesigInd": {
+            "title": "Carrier",
+            "description": "Indicates that the carrier designator code is a duplicate code shared by multiple carriers. In this case to uniquely identify the carrier the carrier name must be specified in addition to the carrier designator code.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "name": {
+            "title": "Carrier",
+            "description": "The commercial name under which the carrier trades. For example: British Airways, SNCF Voyageurs.",
+            "$ref": "#/components/schemas/ProperName"
+          },
+          "transportServiceLeg": {
+            "title": "Each Transport Service Leg may operate the transport vehicle used to fulfill one or more Operating Carriers",
+            "description": "A carrier licensed to operate transport vehicles.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceLeg"
+            }
+          }
+        }
+      },
+      "CheckInArea": {
+        "title": "Check-In Area",
+        "description": "A place provided where facilities exist enabling passengers and / or their luggage to be checked-in.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "checkInAreaIdentifier",
+          "checkInDesk",
+          "terminal"
+        ],
+        "properties": {
+          "bagDropDevice": {
+            "title": "Each Check-In Area may include one or more Bag Drop Devices",
+            "description": "A piece of equipment provided to allow checked-in luggage to be handed over to baggage handling. May be used as a self-service device or be used by a manned check-in desk.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/BagDropDevice"
+            }
+          },
+          "checkInAreaIdentifier": {
+            "title": "Check-In Area.Check-In Area Identifier",
+            "description": "The identifier of the check-in area.",
+            "$ref": "#/components/schemas/Identifier"
+          },
+          "checkInDesk": {
+            "title": "Each Check-In Area must comprise at least one Check-In Desks",
+            "description": "A counter in an airport at which a passenger may check in.",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/CheckInDesk"
+            }
+          },
+          "checkInKiosk": {
+            "title": "Each Check-In Area may include one or more Check-In Kiosks",
+            "description": "A self service piece of equipment provided to allow passengers and / or their luggage to be checked-in.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/CheckInKiosk"
+            }
+          },
+          "terminal": {
+            "title": "Each Check-In Area must be part of one and only one Terminal",
+            "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+            "x-iata-$ref": "#/components/schemas/Terminal"
+          }
+        }
+      },
+      "CheckInDesk": {
+        "title": "Check-In Desk",
+        "description": "A counter in an airport at which a passenger may check in.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights",
+          "Stations"
+        ],
+        "required": [
+          "checkInArea",
+          "checkInDeskIdentifier",
+          "terminal"
+        ],
+        "properties": {
+          "aircraftDep": {
+            "title": "Each Check-In Desk may be used by one or more Aircraft Departure",
+            "description": "A process preparing an aircraft for departure including acquiring baggage, checking in passengers, loading baggage and cargo onto the aircraft and preparing the aircraft up to when it is ready to depart the stand to begin the leg.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftDep"
+            }
+          },
+          "checkInArea": {
+            "title": "Each Check-In Desk must be part of one and only one Check-In Area",
+            "description": "A place provided where facilities exist enabling passengers and / or their luggage to be checked-in.",
+            "x-iata-$ref": "#/components/schemas/CheckInArea"
+          },
+          "checkInDeskIdentifier": {
+            "title": "Check-In Desk.Check-In Desk Identifier",
+            "description": "The identifier of the check-in (desk) infrastructure facility.",
+            "$ref": "#/components/schemas/CheckInDeskIdentifier"
+          },
+          "terminal": {
+            "title": "Each Check-In Desk must be part of one and only one Terminal",
+            "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+            "x-iata-$ref": "#/components/schemas/Terminal"
+          }
+        }
+      },
+      "CheckInDeskIdentifier": {
+        "title": "Check-In Desk_ Identifier",
+        "description": "The check-in desk identifier of the infrastructure facility",
+        "type": "string"
+      },
+      "CheckInFacility": {
+        "title": "Check-In Facility",
+        "description": "A place or piece of equipment provided to allow passengers and / or their luggage to be checked-in.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "properties": {}
+      },
+      "CheckInKiosk": {
+        "title": "Check-In Kiosk",
+        "description": "A self service piece of equipment provided to allow passengers and / or their luggage to be checked-in.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "checkInKioskIdentifier"
+        ],
+        "properties": {
+          "checkInArea": {
+            "title": "Each Check-In Kiosk may be located within one and only one Check-In Area",
+            "description": "A place provided where facilities exist enabling passengers and / or their luggage to be checked-in.",
+            "x-iata-$ref": "#/components/schemas/CheckInArea"
+          },
+          "checkInKioskIdentifier": {
+            "title": "Check-In Kiosk.Check-In Kiosk Identifier",
+            "description": "The identifier of the check-in kiosk.",
+            "$ref": "#/components/schemas/Identifier"
+          }
+        }
+      },
+      "City": {
+        "title": "City",
+        "description": "A City, town, or postal station (i.e. a postal service territory, often used in a military address, or metropolitan area).",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Bags",
+          "Flights",
+          "Geographical Locations",
+          "Parties",
+          "Services & Products"
+        ],
+        "required": [
+          "country",
+          "countrySubDivision"
+        ],
+        "properties": {
+          "cityName": {
+            "title": "City.City Name",
+            "description": "The name, expressed as text, of the city, town or village.",
+            "$ref": "#/components/schemas/Name"
+          },
+          "country": {
+            "title": "Each City must be located within one and only one Country",
+            "description": "A nation with its own government, occupying a particular territory.",
+            "x-iata-$ref": "#/components/schemas/Country"
+          },
+          "countrySubDivision": {
+            "title": "Each City must be located within one and only one Country Sub-Division",
+            "description": "An area of land which is a sub-division within a country, such as a state, a county, a canton, a province, etc.",
+            "x-iata-$ref": "#/components/schemas/CountrySubDivision"
+          },
+          "iataLocationCode": {
+            "title": "City.IATA Location Code",
+            "description": "IATA defined code identifying a city or station.",
+            "$ref": "#/components/schemas/IataLocationCode"
+          },
+          "station": {
+            "title": "Each City may be serviced by one or more Stations",
+            "description": "The major town, serviced by the station, that the airline industry has decided to identify to support passenger services.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/Station"
+            }
+          }
+        }
+      },
+      "Code": {
+        "title": "Code",
+        "description": "A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.",
+        "type": "string"
+      },
+      "Count": {
+        "title": "Count",
+        "description": "A total number of something.",
+        "type": "integer"
+      },
+      "Country": {
+        "title": "Country",
+        "description": "A nation with its own government, occupying a particular territory.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Bags",
+          "Cases",
+          "Flights",
+          "Geographical Locations",
+          "Parties",
+          "Shopping Criteria",
+          "Taxes"
+        ],
+        "properties": {
+          "countryCode": {
+            "title": "Country.Country Code",
+            "description": "ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.",
+            "$ref": "#/components/schemas/CountryCode"
+          },
+          "countryName": {
+            "title": "Country.Country Name",
+            "description": "The name, expressed as text, of the country.",
+            "$ref": "#/components/schemas/ProperName"
+          },
+          "countrySubDivision": {
+            "title": "Each Country may be organized into one or more Country Sub-Divisions",
+            "description": "An area of land which is a sub-division within a country, such as a state, a county, a canton, a province, etc.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/CountrySubDivision"
+            }
+          }
+        }
+      },
+      "CountryCode": {
+        "title": "Country_ Code",
+        "description": "ISO Country Code.",
+        "$ref": "#/components/schemas/CountryCodeEnum"
+      },
+      "CountryCodeEnum": {
+        "title": "Country Code",
+        "description": "The code list of ISO 3166 two-alpha Country Codes",
+        "type": "string",
+        "pattern": "^[A-Z]{2}$"
+      },
+      "CountrySubDivision": {
+        "title": "Country Sub-Division",
+        "description": "An area of land which is a sub-division within a country, such as a state, a county, a canton, a province, etc.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Bags",
+          "Flights",
+          "Geographical Locations",
+          "Shopping Criteria",
+          "Taxes"
+        ],
+        "required": [
+          "country"
+        ],
+        "properties": {
+          "country": {
+            "title": "Each Country Sub-Division must be located within one and only one Country",
+            "description": "A nation with its own government, occupying a particular territory.",
+            "x-iata-$ref": "#/components/schemas/Country"
+          },
+          "countrySubDivisionCode": {
+            "title": "Country Sub-Division.Country Sub-Division Code",
+            "description": "The ISO code identifying this country sub-division within a given country. E.g. 'AZ' for state of Arizona (US), 'BY' for region of Bavaria (Germany).",
+            "$ref": "#/components/schemas/CountrySubDivisionCode"
+          },
+          "countrySubDivisionName": {
+            "title": "Country Sub-Division.Country Sub-Division Name",
+            "description": "The name, expressed as text, of the sub-division of a country.",
+            "$ref": "#/components/schemas/ProperName"
+          }
+        }
+      },
+      "CountrySubDivisionCode": {
+        "title": "Country Sub-Division_ Code",
+        "description": "ISO 3166-2 Country Sub-Division Code. Max-3-char sub-division code without preceding country code. E.g. 'AZ' for Arizona, 'BY' for Bavaria region in Germany.",
+        "$ref": "#/components/schemas/CountrySubDivisionCodeEnum"
+      },
+      "CountrySubDivisionCodeEnum": {
+        "title": "Country Sub-Division Code",
+        "description": "The list of Country Sub-Division Codes in ISO 3166-2, or referenced from ISO 3166-2 for the specific countries. Max-3-char sub-division code without preceding country code.",
+        "type": "string"
+      },
+      "DateTime": {
+        "title": "Date Time",
+        "description": "A date time identifies a date and time of day to various common resolutions: year, month, week, day, hour, minute, second, and fraction of second.",
+        "type": "string",
+        "format": "date-time"
+      },
+      "Duration": {
+        "title": "Duration",
+        "description": "A duration is the specification of a length of time without a fixed start or end time, expressed in Gregorian calendar time units (Year, Month, Week, or Day) and Hours, Minutes or Seconds",
+        "type": "string",
+        "format": "duration"
+      },
+      "Flight": {
+        "title": "Flight",
+        "description": "A sequence of flight legs designed to meet the demands of the flight services operating under the same operational flight number, making efficient use of available aircraft for the repositioning of aircraft, and ensuring conformance with the use of flight numbers as defined by regulations.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "flightLeg",
+          "flightNumberText",
+          "operatingAirline",
+          "operationalSuffixText",
+          "originDepDateTime",
+          "statusCode"
+        ],
+        "properties": {
+          "arrivalAirport": {
+            "title": "Each Inbound Flight may finish at one or more Inbound Flights",
+            "description": "A facility where air transportation originates, stops and / or terminates, and where passengers and/or cargo can be taken on or off and/or maintenance, re-stocking or re-fueling takes place.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/Airport"
+            }
+          },
+          "depAirport": {
+            "title": "Each Outbound Flight may start at one or more Outbound Flights",
+            "description": "A facility where air transportation originates, stops and / or terminates, and where passengers and/or cargo can be taken on or off and/or maintenance, re-stocking or re-fueling takes place.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/Airport"
+            }
+          },
+          "flightLeg": {
+            "title": "Each Flight",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/FlightLeg"
+            }
+          },
+          "flightNumberText": {
+            "title": "Flight",
+            "description": "The numerical designation of a flight",
+            "$ref": "#/components/schemas/FlightNumberText"
+          },
+          "operatingAirline": {
+            "title": "Each Flight",
+            "description": "An organization operating aircraft for commercial purposes that offers air transport services to the public for carriage of passengers, mail and/or cargo and is certified for such purposes by the civil aviation authority of the state in which it is established.",
+            "$ref": "#/components/schemas/Airline"
+          },
+          "operationalSuffixText": {
+            "title": "Flight",
+            "description": "A code assigned by the operating airline and appended to the flight number to distinguish multiple flights with the same flight number for operational purposes.",
+            "$ref": "#/components/schemas/OperationalSuffixText"
+          },
+          "originDepDateTime": {
+            "title": "Flight",
+            "description": "The date in UTC of the departure from the station of origin.",
+            "$ref": "#/components/schemas/DateTime"
+          },
+          "statusCode": {
+            "title": "Flight",
+            "description": "The state of the flight.",
+            "$ref": "#/components/schemas/FlightStatusCode"
+          }
+        }
+      },
+      "FlightLeg": {
+        "title": "Flight Leg",
+        "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "arrivalAirport",
+          "arrivalDateTime",
+          "depAirport",
+          "depDateTime",
+          "flight",
+          "statusCode"
+        ],
+        "properties": {
+          "aircraft": {
+            "title": "Each Flight Leg",
+            "description": "A transport vehicle which is certified as airworthy by a competent aeronautical authority.",
+            "$ref": "#/components/schemas/Aircraft"
+          },
+          "arrival": {
+            "title": "Each Flight Leg",
+            "description": "A process handling the arrival of an aircraft from passenger disembarkation, baggage unloading and reuniting passengers with their luggage.",
+            "$ref": "#/components/schemas/AircraftArrival"
+          },
+          "arrivalAirport": {
+            "title": "Each Flight Leg",
+            "description": "A facility where air transportation originates, stops and / or terminates, and where passengers and/or cargo can be taken on or off and/or maintenance, re-stocking or re-fueling takes place.",
+            "$ref": "#/components/schemas/Airport"
+          },
+          "arrivalDateTime": {
+            "title": "Flight Leg",
+            "description": "The actual date and time of arrival of the aircraft.",
+            "$ref": "#/components/schemas/DateTime"
+          },
+          "dep": {
+            "title": "Each Flight Leg",
+            "description": "A process preparing an aircraft for departure including acquiring baggage, checking in passengers, loading baggage and cargo onto the aircraft and preparing the aircraft up to when it is ready to depart the stand to begin the leg.",
+            "$ref": "#/components/schemas/AircraftDep"
+          },
+          "depAirport": {
+            "title": "Each Outbound Leg must supplies one and only one Outbound Leg",
+            "description": "A facility where air transportation originates, stops and / or terminates, and where passengers and/or cargo can be taken on or off and/or maintenance, re-stocking or re-fueling takes place.",
+            "$ref": "#/components/schemas/Airport"
+          },
+          "depDateTime": {
+            "title": "Flight Leg",
+            "description": "The actual date and time of departure of the aircraft.",
+            "$ref": "#/components/schemas/DateTime"
+          },
+          "distanceMeasure": {
+            "title": "Flight Leg",
+            "description": "Total distance between the beginning and end stations of a leg, measured by the great circle of the earth.",
+            "$ref": "#/components/schemas/Measure"
+          },
+          "flight": {
+            "title": "Each Flight Leg",
+            "description": "A sequence of flight legs designed to meet the demands of the flight services operating under the same operational flight number, making efficient use of available aircraft for the repositioning of aircraft, and ensuring conformance with the use of flight numbers as defined by regulations.",
+            "$ref": "#/components/schemas/Flight"
+          },
+          "iataAircraftType": {
+            "title": "Each Flight Leg",
+            "description": "A grouping of aircraft, defined in the SSIM RP 1761b, where aircraft sharing a family name, a common fuselage cross section and a common service character (e.g. Passenger, Cargo or Mixed Configuration) are recognized as independent groups.",
+            "$ref": "#/components/schemas/IataAircraftType"
+          },
+          "inboundLegStop": {
+            "title": "Each Inbound leg may be followed by one and only one Inbound leg",
+            "description": "A stop made by an vehicle such as an aircraft, train, bus or ferry on the way to its final destination.",
+            "$ref": "#/components/schemas/TransitStop"
+          },
+          "operationalLeg": {
+            "title": "Each Flight Leg",
+            "description": "If a technical stop for re-fueling is needed then there will be two flight Legs required to fulfill one transport service leg. Also, if a single flight under abnormal conditions, recognized before departure, cannot go directly to its destination an additional leg may be required.",
+            "$ref": "#/components/schemas/TransportServiceLeg"
+          },
+          "outboundLegStop": {
+            "title": "Each Outbound Leg Stop may follow one and only one Outbound Leg",
+            "description": "A stop made by an vehicle such as an aircraft, train, bus or ferry on the way to its final destination.",
+            "x-iata-$ref": "#/components/schemas/TransitStop"
+          },
+          "statusCode": {
+            "title": "Flight Leg",
+            "description": "The state of the flight leg.",
+            "$ref": "#/components/schemas/FlightLegStatusCode"
+          }
+        }
+      },
+      "FlightLegStatusCode": {
+        "title": "Flight Leg Status_ Code",
+        "description": "The states of a flight leg.",
+        "$ref": "#/components/schemas/FlightLegStatusCodeEnum"
+      },
+      "FlightLegStatusCodeEnum": {
+        "title": "Flight Leg Status Code",
+        "description": "These elements target codes that are operationally significant. This provides the current operational status of a flight leg. Supported codesets: 1245, 2005 and 9750 Possible statuses: Aborted, Canceled, Completed, Diverted, Planned, Re-routed, Underway",
+        "type": "string"
+      },
+      "FlightNumberText": {
+        "title": "Flight Number_ Text",
+        "description": "Identifies a flight number. 1 to 4 digits. May or may not have leading zeros when less than 4 digits. The use of leading zeros does not create a different Flight Number. For example, Flight Numbers 123 and 0123 are the same.",
+        "type": "string"
+      },
+      "FlightStatusCode": {
+        "title": "Flight Status_ Code",
+        "description": "Contains the valid statuses for a Flight.",
+        "$ref": "#/components/schemas/FlightStatusCodeEnum"
+      },
+      "FlightStatusCodeEnum": {
+        "title": "Flight Status Code",
+        "description": "These elements target codes if there is no processing required on the information, i.e. it is for use only for staff or public display. List of Supported codesets are defined in these category: 2005 and 9750 Possible statuses: Flight Diverted, Scheduled, Landed, Re-route, Canceled, Boarding, Departed",
+        "type": "string"
+      },
+      "IataAircraftType": {
+        "title": "IATA Aircraft Type",
+        "description": "A grouping of aircraft, defined in the SSIM RP 1761b, where aircraft sharing a family name, a common fuselage cross section and a common service character (e.g. Passenger, Cargo or Mixed Configuration) are recognized as independent groups.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "iataAircraftTypeCode"
+        ],
+        "properties": {
+          "aircraft": {
+            "title": "Each IATA Aircraft Type",
+            "description": "A transport vehicle which is certified as airworthy by a competent aeronautical authority.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/Aircraft"
+            }
+          },
+          "flightLeg": {
+            "title": "Each IATA Aircraft Type",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/FlightLeg"
+            }
+          },
+          "iataAircraftTypeCode": {
+            "title": "IATA Aircraft Type",
+            "description": "Code assigned to an aircraft type in IATA SSIM.",
+            "$ref": "#/components/schemas/Code"
+          }
+        }
+      },
+      "IataLocation": {
+        "title": "IATA Location",
+        "description": "A place or area from which a transport service may begin, visit and/or terminate.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "iataLocationCode"
+        ],
+        "properties": {
+          "iataLocationCode": {
+            "title": "IATA Location",
+            "description": "The code assigned to an IATA Location by IATA.",
+            "$ref": "#/components/schemas/IataLocationCode"
+          }
+        }
+      },
+      "IataLocationCode": {
+        "title": "IATA Location_ Code",
+        "description": "Additional BDT to specify the codeset which defines the IATA airport or city codes.",
+        "$ref": "#/components/schemas/IataLocationCodeEnum"
+      },
+      "IataLocationCodeEnum": {
+        "title": "IATA Location Code",
+        "description": "Enumeration set for the Location Code BDT.",
+        "type": "string"
+      },
+      "IataMetropolitanArea": {
+        "title": "IATA Metropolitan Area",
+        "description": "A city with more than one airport servicing it.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "iataMetropolitanAreaCode"
+        ],
+        "properties": {
+          "iataMetropolitanAreaCode": {
+            "title": "IATA Metropolitan Area",
+            "description": "The code assigned to an IATA Metropolitan Area by IATA.",
+            "$ref": "#/components/schemas/IataLocationCode"
+          }
+        }
+      },
+      "IataTerminalCode": {
+        "title": "IATA Terminal_ Code",
+        "description": "The code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. Example: '2W'.",
+        "$ref": "#/components/schemas/IataTerminalCodeEnum"
+      },
+      "IataTerminalCodeEnum": {
+        "title": "IATA Terminal Code",
+        "description": "The code of the terminal infrastructure facility.",
+        "type": "string"
+      },
+      "Identifier": {
+        "title": "Identifier",
+        "description": "An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.",
+        "type": "string"
+      },
+      "Ind": {
+        "title": "Indicator",
+        "description": "An indicator is a list of two mutually exclusive Boolean values that express the only possible states of a property.",
+        "type": "boolean"
+      },
+      "Measure": {
+        "title": "Measure",
+        "description": "A measure is a numeric value determined by measuring an object along with the specified unit of measure.",
+        "type": "object",
+        "properties": {
+          "unitCode": {
+            "title": "Measure.Unit. Code",
+            "description": "The type of unit of measure.",
+            "type": "string"
+          },
+          "value": {
+            "title": "Measure.Content",
+            "description": "The numeric value determined by measuring an object.",
+            "type": "number"
+          }
+        }
+      },
+      "Name": {
+        "title": "Name",
+        "description": "A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept",
+        "type": "string"
+      },
+      "OperationalSuffixText": {
+        "title": "Operational Suffix_ Text",
+        "description": "Defines the Operational Suffix which is appended to a flight number.",
+        "type": "string"
+      },
+      "ProperName": {
+        "title": "Proper_ Name",
+        "description": "BDT with value constraints for proper, regular names (e.g. Individual Surname, Individual First Name, Company Name, etc.).",
+        "type": "string"
+      },
+      "Station": {
+        "title": "Station",
+        "description": "A location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights",
+          "Offers",
+          "Orders",
+          "Shopping Criteria",
+          "Stations",
+          "Taxes"
+        ],
+        "required": [
+          "city"
+        ],
+        "properties": {
+          "baggageHandlingBay": {
+            "title": "Each Station may comprise one or more Baggage Handling Bay",
+            "description": "An infrastructure facility in a recessed, enclosed or bounded area for baggage handling.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/BaggageHandlingBay"
+            }
+          },
+          "city": {
+            "title": "Each Station must service at least one Cities",
+            "description": "The major town, serviced by the station, that the airline industry has decided to identify to support passenger services.",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/City"
+            }
+          },
+          "iataLocationCode": {
+            "title": "Station.IATA Location Code",
+            "description": "IATA defined code identifying a city or station.",
+            "$ref": "#/components/schemas/IataLocationCode"
+          },
+          "inboundTransportService": {
+            "title": "Each Inbound Transport Service may be the finish of one or more Destination Stations",
+            "description": "A provision of carriage, predominately using aircraft, calling at one or more stations along a specific route.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportService"
+            }
+          },
+          "inboundTransportServiceLeg": {
+            "title": "Each Inbound Transport Service Leg may be the finish of one or more Arrival Stations",
+            "description": "A section of a transport service from one station to the next.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceLeg"
+            }
+          },
+          "inboundTransportServiceSegment": {
+            "title": "Each Inbound Transport Service Segment may be the arrival point for one or more Destination Stations",
+            "description": "Derived from the ending transportation service leg for the transport service segment.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceSegment"
+            }
+          },
+          "outboundTransportService": {
+            "title": "Each Outbound Transport Service may be the start of one or more Origin Stations",
+            "description": "A provision of carriage, predominately using aircraft, calling at one or more stations along a specific route.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportService"
+            }
+          },
+          "outboundTransportServiceLeg": {
+            "title": "Each Outbound Transport Service Leg may be the start of one or more Departure Stations",
+            "description": "A section of a transport service from one station to the next.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceLeg"
+            }
+          },
+          "outboundTransportServiceSegment": {
+            "title": "Each Outbound Transport Service Segment may be the departure point for one or more Origin Stations",
+            "description": "Derived from the starting transportation service leg for the transport service segment.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceSegment"
+            }
+          },
+          "stationName": {
+            "title": "Station.Station Name",
+            "description": "Name of the station. E.g. George Bush Intercontinental Airport",
+            "$ref": "#/components/schemas/StationName"
+          },
+          "terminal": {
+            "title": "Each Station may comprise one or more Terminals",
+            "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/Terminal"
+            }
+          },
+          "transportVehicleParkingPosition": {
+            "title": "Each Station may comprise one or more Transport Vehicle Parking Position",
+            "description": "A recognized location where a transport vehicle may halt and stay temporarily in order to allow loading, offloading and / or servicing such as refueling and turn around.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/TransportVehicleParkingPosition"
+            }
+          }
+        }
+      },
+      "StationName": {
+        "title": "Station_ Name",
+        "description": "Data type information for Station Name.",
+        "type": "string"
+      },
+      "Terminal": {
+        "title": "Terminal",
+        "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights",
+          "Stations"
+        ],
+        "required": [
+          "iataTerminalCode",
+          "station"
+        ],
+        "properties": {
+          "accessGate": {
+            "title": "Each Terminal may comprise one or more Access Gate",
+            "description": "A gate that allows access to or exit from a path to a transport vehicle.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/AccessGate"
+            }
+          },
+          "aircraftArrival": {
+            "title": "Each Terminal may be used by one or more Aircraft Arrival",
+            "description": "A process handling the arrival of an aircraft from passenger disembarkation, baggage unloading and reuniting passengers with their luggage.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftArrival"
+            }
+          },
+          "aircraftDep": {
+            "title": "Each Terminal may be used by one or more Departure Terminals",
+            "description": "A process preparing an aircraft for departure including acquiring baggage, checking in passengers, loading baggage and cargo onto the aircraft and preparing the aircraft up to when it is ready to depart the stand to begin the leg.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftDep"
+            }
+          },
+          "checkInArea": {
+            "title": "Each Terminal may comprise one or more Check-In Areas",
+            "description": "A place provided where facilities exist enabling passengers and / or their luggage to be checked-in.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/CheckInArea"
+            }
+          },
+          "checkInDesk": {
+            "title": "Each Terminal may comprise one or more Check-In Desks",
+            "description": "A counter in an airport at which a passenger may check in.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/CheckInDesk"
+            }
+          },
+          "iataTerminalCode": {
+            "title": "Terminal.IATA Terminal Code",
+            "description": "The code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. Example: '2W'.",
+            "$ref": "#/components/schemas/IataTerminalCode"
+          },
+          "station": {
+            "title": "Each Terminal must be part of one and only one Station",
+            "description": "A location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.",
+            "x-iata-$ref": "#/components/schemas/Station"
+          },
+          "terminalName": {
+            "title": "Terminal.Terminal Name",
+            "description": "The name of the terminal.",
+            "$ref": "#/components/schemas/Name"
+          },
+          "terminalPier": {
+            "title": "Each Terminal may comprise one or more Terminal Piers",
+            "description": "A raised structure, including bridge and building supports and walkways, typically supported by widely spread piles or pillars.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/TerminalPier"
+            }
+          },
+          "terminalSatellite": {
+            "title": "Each Terminal may comprise one or more Terminal Satellites",
+            "description": "A section, open space, or building inside an airport terminal or at its periphery, providing access to the planes through gates.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/TerminalSatellite"
+            }
+          }
+        }
+      },
+      "TerminalPier": {
+        "title": "Terminal Pier",
+        "description": "A raised structure, including bridge and building supports and walkways, typically supported by widely spread piles or pillars.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights",
+          "Stations"
+        ],
+        "required": [
+          "terminal",
+          "terminalPierIdentifier"
+        ],
+        "properties": {
+          "aircraftArrival": {
+            "title": "Each Terminal Pier may be used by one or more Aircraft Arrival",
+            "description": "A process handling the arrival of an aircraft from passenger disembarkation, baggage unloading and reuniting passengers with their luggage.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftArrival"
+            }
+          },
+          "aircraftDep": {
+            "title": "Each Terminal Pier may be used by one or more Aircraft Departure",
+            "description": "A process preparing an aircraft for departure including acquiring baggage, checking in passengers, loading baggage and cargo onto the aircraft and preparing the aircraft up to when it is ready to depart the stand to begin the leg.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftDep"
+            }
+          },
+          "terminal": {
+            "title": "Each Terminal Pier must be part of one and only one Terminal",
+            "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+            "x-iata-$ref": "#/components/schemas/Terminal"
+          },
+          "terminalPierIdentifier": {
+            "title": "Terminal Pier.Terminal Pier Identifier",
+            "description": "The identifier of the terminal pier infrastructure facility.",
+            "$ref": "#/components/schemas/TerminalPierIdentifier"
+          }
+        }
+      },
+      "TerminalPierIdentifier": {
+        "title": "Terminal Pier_ Identifier",
+        "description": "The terminal pier identifier of the infrastructure facility",
+        "type": "string"
+      },
+      "TerminalSatellite": {
+        "title": "Terminal Satellite",
+        "description": "A section, open space, or building inside an airport terminal or at its periphery, providing access to the planes through gates.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights",
+          "Stations"
+        ],
+        "required": [
+          "terminal",
+          "terminalSatelliteIdentifier"
+        ],
+        "properties": {
+          "aircraftArrival": {
+            "title": "Each Terminal Satellite may be used by one or more Aircraft Arrival",
+            "description": "A process handling the arrival of an aircraft from passenger disembarkation, baggage unloading and reuniting passengers with their luggage.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftArrival"
+            }
+          },
+          "aircraftDep": {
+            "title": "Each Terminal Satellite may be used by one or more Aircraft Departure",
+            "description": "A process preparing an aircraft for departure including acquiring baggage, checking in passengers, loading baggage and cargo onto the aircraft and preparing the aircraft up to when it is ready to depart the stand to begin the leg.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftDep"
+            }
+          },
+          "terminal": {
+            "title": "Each Terminal Satellite must be part of one and only one Terminal",
+            "description": "A departure and/or arrival building for aircraft, passengers or freight at a station for any transport mode.",
+            "x-iata-$ref": "#/components/schemas/Terminal"
+          },
+          "terminalSatelliteIdentifier": {
+            "title": "Terminal Satellite.Terminal Satellite Identifier",
+            "description": "The identifier of the terminal satellite infrastructure facility.",
+            "$ref": "#/components/schemas/TerminalSatelliteIdentifier"
+          }
+        }
+      },
+      "TerminalSatelliteIdentifier": {
+        "title": "Terminal Satellite_ Identifier",
+        "description": "The terminal Satellite identifier of the infrastructure facility",
+        "type": "string"
+      },
+      "Text": {
+        "title": "Text",
+        "description": "Text is a character string such as a finite set of characters generally in the form of words of a language.",
+        "type": "string"
+      },
+      "Time": {
+        "title": "Time",
+        "description": "Time is a point in the 24 hour clock expressed in hours, minutes and seconds. It has no implicit reference to a time zone.",
+        "type": "string",
+        "format": "hh:mm:ss"
+      },
+      "TransitStop": {
+        "title": "Transit Stop",
+        "description": "A stop made by an vehicle such as an aircraft, train, bus or ferry on the way to its final destination.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "boardingAllowedInd",
+          "changeOfGaugeInd",
+          "disembarkingAllowedInd",
+          "inboundLeg",
+          "technicalStopOnlyInd"
+        ],
+        "properties": {
+          "boardingAllowedInd": {
+            "title": "Transit Stop",
+            "description": "Indicates if facilities are required to enable passengers to board.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "changeOfGaugeInd": {
+            "title": "Transit Stop",
+            "description": "Indicates a change of gauge will take place at this en-route stop.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "disembarkingAllowedInd": {
+            "title": "Transit Stop",
+            "description": "Indicates if facilities are required to enable passengers to disembark.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "inboundLeg": {
+            "title": "Each Inbound leg must follow one and only one Inbound Leg Stop",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "x-iata-$ref": "#/components/schemas/FlightLeg"
+          },
+          "onGroundDurationTime": {
+            "title": "Transit Stop",
+            "description": "Total elapsed time the aircraft is scheduled to remain on the ground during the en-route stop.",
+            "$ref": "#/components/schemas/Time"
+          },
+          "outboundLeg": {
+            "title": "Each Outbound Leg Stop may be followed by one or more Outbound Leg Stops",
+            "description": "An operation of an aircraft from off-blocks at the departure airport to on-blocks at the subsequent arrival airport.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/FlightLeg"
+            }
+          },
+          "technicalStopOnlyInd": {
+            "title": "Transit Stop",
+            "description": "Indicates that the stop is for reasons other than the embarkation or disembarkation of passengers.",
+            "$ref": "#/components/schemas/Ind"
+          }
+        }
+      },
+      "TransportMeansCode": {
+        "title": "Transport Means_ Code",
+        "description": "Defined types of transport",
+        "$ref": "#/components/schemas/TransportMeansCodeEnum"
+      },
+      "TransportMeansCodeEnum": {
+        "title": "Transport Means Code",
+        "description": "These elements target codes used for the transportation mode service type. Possible statuses: Aircraft, Bus, Coach, Ferry, Train, Hotel, Cruise",
+        "type": "string"
+      },
+      "TransportParkingPositionIdentifier": {
+        "title": "Transport Parking Position_ Identifier",
+        "description": "The parking position identifier of the infrastructure facility",
+        "type": "string"
+      },
+      "TransportService": {
+        "title": "Transport Service",
+        "description": "A provision of carriage, predominately using aircraft, calling at one or more stations along a specific route.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "administratingAirline",
+          "destStation",
+          "flightNumberText",
+          "originDepDateTime",
+          "originStation",
+          "statusCode"
+        ],
+        "properties": {
+          "administratingAirline": {
+            "title": "Each Transport Service",
+            "description": "An organization operating aircraft for commercial purposes that offers air transport services to the public for carriage of passengers, mail and/or cargo and is certified for such purposes by the civil aviation authority of the state in which it is established.",
+            "$ref": "#/components/schemas/Airline"
+          },
+          "destStation": {
+            "title": "Each Inbound Transport Service must finish at one and only one Inbound Transport Service",
+            "description": "A location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.",
+            "$ref": "#/components/schemas/Station"
+          },
+          "flightNumberText": {
+            "title": "Transport Service",
+            "description": "The numerical designation of a transport service assigned by the administrating airline.",
+            "$ref": "#/components/schemas/FlightNumberText"
+          },
+          "operationalSuffixText": {
+            "title": "Transport Service",
+            "description": "A code assigned by the administrating airline and appended to the flight number to distinguish multiple services with the same flight number typically for operational purposes.",
+            "$ref": "#/components/schemas/OperationalSuffixText"
+          },
+          "originDepDateTime": {
+            "title": "Transport Service",
+            "description": "The date in UTC of the scheduled departure from the station of origin.",
+            "$ref": "#/components/schemas/DateTime"
+          },
+          "originStation": {
+            "title": "Each Outbound Transport Service must start at one and only one Outbound Transport Service",
+            "description": "A location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.",
+            "$ref": "#/components/schemas/Station"
+          },
+          "statusCode": {
+            "title": "Transport Service",
+            "description": "The state of the transport service. For example: Planned, In-Progress, Canceled, Fulfilled.",
+            "$ref": "#/components/schemas/TransportServiceStatusCode"
+          },
+          "transportServiceLeg": {
+            "title": "Each Transport Service",
+            "description": "A section of a transport service from one station to the next.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceLeg"
+            }
+          },
+          "transportServiceSegment": {
+            "title": "Each Transport Service",
+            "description": "When a service is not open to the public such as when a transportation vehicle is being re-located no segment is required.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceSegment"
+            }
+          }
+        }
+      },
+      "TransportServiceLeg": {
+        "title": "Transport Service Leg",
+        "description": "A section of a transport service from one station to the next.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "arrivalStation",
+          "depStation",
+          "operatingCarrier",
+          "operationalInd",
+          "scheduledArrivalDateTime",
+          "scheduledDepDateTime",
+          "statusCode",
+          "transportMeansCode",
+          "transportService"
+        ],
+        "properties": {
+          "arrivalStation": {
+            "title": "Each Inbound Transport Service Leg must finish at one and only one Inbound Transport Service Leg",
+            "description": "A location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.",
+            "$ref": "#/components/schemas/Station"
+          },
+          "codesharedLeg": {
+            "title": "Each Codeshared Leg may share one and only one Codesharing Leg",
+            "description": "A Codeshared Leg must be a Non-operating Transport Service Leg and the shared leg must be an Operating Transport Service Leg.",
+            "x-iata-$ref": "#/components/schemas/TransportServiceLeg"
+          },
+          "codesharingLeg": {
+            "title": "Each Codeshared Leg may be shared by one or more Codeshared Legs",
+            "description": "A Codeshared Leg must be a Non-operating Transport Service Leg and the shared leg must be an Operating Transport Service Leg.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/TransportServiceLeg"
+            }
+          },
+          "depStation": {
+            "title": "Each Outbound Transport Service Leg must start at one and only one Outbound Transport Service Leg",
+            "description": "A location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.",
+            "$ref": "#/components/schemas/Station"
+          },
+          "duplicatedLeg": {
+            "title": "Each Duplicated Leg may be fulfilled by one and only one Duplicate Leg",
+            "description": "A Duplicate Leg must be a Non-operating Transport Service Leg and the Duplicated Leg must be an Operating Transport Service Leg.",
+            "x-iata-$ref": "#/components/schemas/TransportServiceLeg"
+          },
+          "duplicateLeg": {
+            "title": "Each Duplicated Leg may fulfill one or more Duplicated Legs",
+            "description": "A Duplicate Leg must be a Non-operating Transport Service Leg and the Duplicated Leg must be an Operating Transport Service Leg.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/TransportServiceLeg"
+            }
+          },
+          "endTransportServiceSegment": {
+            "title": "Each End Transport Service Segment may end with one or more Inbound Transport Service Legs",
+            "description": "A section of a transport service between a board point and a subsequent off point.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceSegment"
+            }
+          },
+          "flightLeg": {
+            "title": "Each Transport Service Leg",
+            "description": "If a technical stop for re-fueling is needed then there will be two flight Legs required to fulfill one transport service leg. Also, if a single flight under abnormal conditions, recognized before departure, cannot go directly to its destination an additional leg may be required.",
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/FlightLeg"
+            }
+          },
+          "inboundLeg": {
+            "title": "Each Outbound Leg may follow one and only one Outbound Leg",
+            "description": "A section of a transport service from one station to the next.",
+            "$ref": "#/components/schemas/TransportServiceLeg"
+          },
+          "operatingCarrier": {
+            "title": "Each Transport Service Leg must be fulfilled by a transport vehicle operated by one and only one Transport Service Leg",
+            "description": "Demoralized, for simplicity, by traversing the model to find the Operating Carrier whether the operating carrier is an airline or train company or any other mode of transport operator.",
+            "$ref": "#/components/schemas/Carrier"
+          },
+          "operationalInd": {
+            "title": "Transport Service Leg",
+            "description": "Indicates if the transport service leg is an operational transport service leg and may therefore give rise to a flight leg, otherwise it is a non-operational leg.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "outboundLeg": {
+            "title": "Each Outbound Leg may be followed by one and only one Inbound Leg",
+            "description": "A section of a transport service from one station to the next.",
+            "x-iata-$ref": "#/components/schemas/TransportServiceLeg"
+          },
+          "scheduledArrivalDateTime": {
+            "title": "Transport Service Leg",
+            "description": "The scheduled date and time of arrival.",
+            "$ref": "#/components/schemas/DateTime"
+          },
+          "scheduledDepDateTime": {
+            "title": "Transport Service Leg",
+            "description": "The scheduled date and time of departure.",
+            "$ref": "#/components/schemas/DateTime"
+          },
+          "startTransportServiceSegment": {
+            "title": "Each Start Transport Service Segment may start with one or more Outbound Transport Service Legs",
+            "description": "All legs of a segment must be for the sale transport service.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/TransportServiceSegment"
+            }
+          },
+          "statusCode": {
+            "title": "Transport Service Leg",
+            "description": "The state of the transport service leg. For example: Planned, In-Progress, Canceled, Fulfilled.",
+            "$ref": "#/components/schemas/TransportServiceLegStatusCode"
+          },
+          "transportMeansCode": {
+            "title": "Transport Service Leg",
+            "description": "The means of transport used to fulfill the transport service leg. For example: Aircraft, Train, Ferry, Bus, Coach.",
+            "$ref": "#/components/schemas/TransportMeansCode"
+          },
+          "transportService": {
+            "title": "Each Transport Service Leg",
+            "description": "A provision of carriage, predominately using aircraft, calling at one or more stations along a specific route.",
+            "$ref": "#/components/schemas/TransportService"
+          }
+        }
+      },
+      "TransportServiceLegStatusCode": {
+        "title": "Transport Service Leg Status_ Code",
+        "description": "The states of a Transport Service Leg.",
+        "$ref": "#/components/schemas/TransportServiceLegStatusCodeEnum"
+      },
+      "TransportServiceLegStatusCodeEnum": {
+        "title": "Transport Service Leg Status Code",
+        "description": "These elements target codes that are operationally time significant. This provides the current status of a transport service leg Supported codesets: 2005 and 9750 Possible statuses: Scheduled, Planned, Estimated, Actual, Check-in open, Flight Closed",
+        "type": "string"
+      },
+      "TransportServiceSegment": {
+        "title": "Transport Service Segment",
+        "description": "A section of a transport service between a board point and a subsequent off point.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "containsFunnelFlightInd",
+          "dayVariationCount",
+          "destStation",
+          "duration",
+          "iataTicketlessInd",
+          "inboundTransportServiceLeg",
+          "originStation",
+          "outboundTransportServiceLeg",
+          "paxPreScanningInd",
+          "secureFlightInd",
+          "stopsCount",
+          "transportService"
+        ],
+        "properties": {
+          "containsFunnelFlightInd": {
+            "title": "Transport Service Segment",
+            "description": "Indicates if the segment contains a funnel flight.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "dayVariationCount": {
+            "title": "Transport Service Segment",
+            "description": "The difference in days between the day of departure in local time and the day of arrival in local time. For example: -1 for previous day, 0 for same day, 1 for next day.",
+            "$ref": "#/components/schemas/Count"
+          },
+          "destStation": {
+            "title": "Each Inbound Transport Service Segment must arrive at one and only one Inbound Transport Service Segment",
+            "description": "Derived from the ending transportation service leg for the transport service segment.",
+            "$ref": "#/components/schemas/Station"
+          },
+          "duration": {
+            "title": "Transport Service Segment",
+            "description": "The elapsed time between the scheduled departure at the boarding point and the scheduled arrival at the off-point.",
+            "$ref": "#/components/schemas/Duration"
+          },
+          "iataTicketlessInd": {
+            "title": "Transport Service Segment",
+            "description": "Indicates that the segment will not have a ticket that conforms to IATA Resolutions but may have an alternative ticket.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "inboundTransportServiceLeg": {
+            "title": "Each End Transport Service Segment must end one and only one End Transport Service Segment",
+            "description": "A section of a transport service from one station to the next.",
+            "$ref": "#/components/schemas/TransportServiceLeg"
+          },
+          "originStation": {
+            "title": "Each Outbound Transport Service Segment must depart from one and only one Outbound Transport Service Segment",
+            "description": "Derived from the starting transportation service leg for the transport service segment.",
+            "$ref": "#/components/schemas/Station"
+          },
+          "outboundTransportServiceLeg": {
+            "title": "Each Start Transport Service Segment must start one and only one Start Transport Service Segment",
+            "description": "All legs of a segment must be for the sale transport service.",
+            "$ref": "#/components/schemas/TransportServiceLeg"
+          },
+          "paxPreScanningInd": {
+            "title": "Transport Service Segment",
+            "description": "Indicates if the segment is subject to at least one passenger pre-screening program such as the US TSA 'Secure Flight' passenger prescreening program.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "secureFlightInd": {
+            "title": "Transport Service Segment",
+            "description": "Indicates that there is a legal requirement to collect additional passenger profile information as per government mandate on segments flying to/from/within/over specified countries.",
+            "$ref": "#/components/schemas/Ind"
+          },
+          "statusCode": {
+            "title": "Transport Service Segment",
+            "description": "The status of Transport service Segment.",
+            "$ref": "#/components/schemas/TransportServiceSegmentStatusCode"
+          },
+          "stopsCount": {
+            "title": "Transport Service Segment",
+            "description": "The number of times the aircraft makes a scheduled transit stop between the origin and destination stations.",
+            "$ref": "#/components/schemas/Count"
+          },
+          "transportService": {
+            "title": "Each Transport Service Segment",
+            "description": "Derived from the transport service legs that srat and end a transport service segment.",
+            "$ref": "#/components/schemas/TransportService"
+          }
+        }
+      },
+      "TransportServiceSegmentStatusCode": {
+        "title": "Transport Service Segment Status_ Code",
+        "description": "The states of a Transport Service Segment.",
+        "$ref": "#/components/schemas/TransportServiceSegmentStatusCodeEnum"
+      },
+      "TransportServiceSegmentStatusCodeEnum": {
+        "title": "Transport Service Segment Status Code",
+        "description": "These elements target codes that are operationally time significant. This provides the current status of a transport service segment. Supported codesets: 2005 and 9750 Possible statuses: Scheduled, Planned, Estimated, Actual, Check-in open, Flight Closed",
+        "type": "string"
+      },
+      "TransportServiceStatusCode": {
+        "title": "Transport Service Status_ Code",
+        "description": "The states of a Transport Service.",
+        "$ref": "#/components/schemas/TransportServiceStatusCodeEnum"
+      },
+      "TransportServiceStatusCodeEnum": {
+        "title": "Transport Service Status Code",
+        "description": "These elements target codes that are service type significant. This provides the current status of a transport Service Type Supported codesets: 2005 and 9750 Possible statuses: Scheduled, Planned, Estimated, Actual, Check-in open, Flight Closed",
+        "type": "string"
+      },
+      "TransportVehicleParkingPosition": {
+        "title": "Transport Vehicle Parking Position",
+        "description": "A recognized location where a transport vehicle may halt and stay temporarily in order to allow loading, offloading and / or servicing such as refueling and turn around.",
+        "type": "object",
+        "x-iata-subject-areas": [
+          "Flights"
+        ],
+        "required": [
+          "station",
+          "transportVehicleParkingPositionIdentifier"
+        ],
+        "properties": {
+          "aircraftArrival": {
+            "title": "Each Transport Vehicle Parking Position",
+            "description": "A process handling the arrival of an aircraft from passenger disembarkation, baggage unloading and reuniting passengers with their luggage.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftArrival"
+            }
+          },
+          "aircraftDep": {
+            "title": "Each Transport Vehicle Parking Position",
+            "description": "A process preparing an aircraft for departure including acquiring baggage, checking in passengers, loading baggage and cargo onto the aircraft and preparing the aircraft up to when it is ready to depart the stand to begin the leg.",
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "x-iata-$ref": "#/components/schemas/AircraftDep"
+            }
+          },
+          "station": {
+            "title": "Each Transport Vehicle Parking Position",
+            "description": "A location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.",
+            "x-iata-$ref": "#/components/schemas/Station"
+          },
+          "transportVehicleParkingPositionIdentifier": {
+            "title": "Transport Vehicle Parking Position",
+            "description": "The identifier of the transport vehicle parking position. For example: 'C102'.",
+            "$ref": "#/components/schemas/TransportParkingPositionIdentifier"
+          }
+        }
+      },
+      "VolumeUnitCode": {
+        "title": "Volume Unit_ Code",
+        "description": "Specifies Volume Unit code list.",
+        "$ref": "#/components/schemas/VolumeUnitCodeEnum"
+      },
+      "VolumeUnitCodeEnum": {
+        "title": "Volume Unit Code",
+        "description": "List of Volume Unit Codes. Subset of UN/CEFACT Recommendation 20.Valid Values: FTQ - Cubic Foot; MTQ - Cubic Meter; CMQ - Cubic Centimeter; INQ - Cubic Inch",
+        "type": "string",
+        "enum": [
+          "FTQ",
+          "MTQ",
+          "CMQ",
+          "INQ"
+        ]
+      },
+      "WeightUnitCode": {
+        "title": "Weight Unit_ Code",
+        "description": "Specifies Weight Unit code list.",
+        "$ref": "#/components/schemas/WeightUnitCodeEnum"
+      },
+      "WeightUnitCodeEnum": {
+        "title": "Weight Unit Code",
+        "description": "List of Weight Unit Codes. Subset of UN/CEFACT Recommendation 20.Valid Values: KGM - Kilogram; LBR - US Pound",
+        "type": "string",
+        "enum": [
+          "KGM",
+          "LBR"
+        ]
+      }
+    }
+  }
+}

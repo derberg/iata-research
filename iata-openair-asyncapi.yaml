@@ -1,0 +1,200 @@
+asyncapi: 3.0.0
+
+info:
+  title: DUMMY showcase - DDHub Gateway WebSocket API
+  version: 1.0.0
+  description: >-
+    The Gateway WebSocket API is an alternative to the REST interface, allowing
+    for real-time messaging (particularly asynchronous responses).
+
+    Protocal "ddhub-protocol"
+
+    API from Energy Web Foundation
+
+servers:
+  public:
+    host: ddhub-gateway-dev.energyweb.org
+    pathname: '/events'
+    protocol: wss
+    description: The Gateway WebSocket API
+
+channels:
+  message:
+    address: /
+    messages:
+      OutgoingMessage:
+        $ref: '#/components/messages/OutgoingMessage'
+      ErrorMessage:
+        $ref: '#/components/messages/ErrorMessage'
+      IncomingMessage:
+        $ref: '#/components/messages/IncomingMessage'
+      #this is a test message added to this real document taken from internet
+      TestForIATA:
+        $ref: '#/components/messages/TestForIATA'
+operations:
+  SendOutgoingMessage:
+    action: send
+    channel:
+      $ref: '#/channels/message'
+    description: >-
+      Publish a message on a particular channel using its fully-qualified
+      channel name.
+    messages:
+      - $ref: '#/channels/message/messages/OutgoingMessage'
+      - $ref: '#/channels/message/messages/ErrorMessage'
+  ReceiveIncommingMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/message'
+    description: Subscribe to messages on relevant channels.
+    messages:
+      - $ref: '#/channels/message/messages/IncomingMessage'
+      # this is a test message reference
+      - $ref: '#/channels/message/messages/TestForIATA'
+components:
+  schemas:
+    TestSchema:
+      # Using schema format
+       schemaFormat: application/vnd.oai.openapi+json;version=3.0.0
+       schema:
+         $ref: './IATA_Open_Air_JSON_Library_23.3.json#/components/schemas/AccessGate'
+      # Using local file ref
+      # $ref: './IATA_Open_Air_JSON_Library_23.3.json#/components/schemas/AccessGate'
+      # Using remote reference that works in Studio
+      # $ref: 'https://api.media.atlassian.com/file/5f189836-fc68-4db7-b38b-9aa64a58b6a1/binary?client=dfbfc3b4-a00a-4cf2-94c9-61c34d2102ab&collection=contentId-607649825&dl=true&max-age=2592000&token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkZmJmYzNiNC1hMDBhLTRjZjItOTRjOS02MWMzNGQyMTAyYWIiLCJhY2Nlc3MiOnsidXJuOmZpbGVzdG9yZTpjb2xsZWN0aW9uOmNvbnRlbnRJZC02MDc2NDk4MjUiOlsicmVhZCJdfSwiZXhwIjoxNzExNDUzMzg3LCJuYmYiOjE3MTE0NTA1MDd9.Im61U3hH06uv9cq8ANJ9FlHQI0wknyfefNLFIlzFo-s#/components/schemas/AccessGate'
+  messages:
+    # test message, others are not IATA related
+    TestForIATA:
+      payload:
+        $ref: '#/components/schemas/TestSchema'
+    OutgoingMessage:
+      payload:
+        type: object
+        required:
+          - fqcn
+          - topicName
+          - topicVersion
+          - topicOwner
+          - transactionId
+          - payload
+        properties:
+          fqcn:
+            type: string
+            description: Channel Name
+            example: channel.name
+          topicName:
+            type: string
+            description: Topic name
+          topicVersion:
+            type: string
+            example: 1.0.0
+            description: Topic Version
+          topicOwner:
+            type: string
+            example: aemo.edge
+            description: Topic Owner
+          transactionId:
+            type: string
+            description: Transaction Id used to check Idempotency
+          payload:
+            type: string
+            example: '{ data: 49 }'
+            description: Payload to be sent to message
+    IncomingMessage:
+      payload:
+        type: object
+        required:
+          - id
+          - topicName
+          - topicOwner
+          - topicVersion
+          - topicSchemaType
+          - payload
+          - signature
+          - sender
+          - timestampNanos
+          - transactionId
+          - signatureValid
+        properties:
+          id:
+            type: string
+            description: message id
+            example: '110'
+          topicName:
+            type: string
+            description: topic Name
+            example: getOperatingEnvelope
+          topicOwner:
+            type: string
+            description: application namespace
+            example: torta.apps.eggplant.vege.iam.ewc
+          topicVersion:
+            type: string
+            description: Topic Version
+            example: 1.0.0
+          topicSchemaType:
+            type: string
+            description: schema type of the topic
+            enum:
+              - JSD7
+              - XML
+              - XSD6
+              - CSV
+              - TSV
+            example: JSD7
+          payload:
+            type: string
+            description: Payload sent to message
+            example: '{"fileId":"624bfd4f4c6cf04abfc20041"}'
+          signature:
+            type: string
+            description: signature sent to message
+            example: >-
+              0x0abc6026b01856a756de47ec6f44d9c14fe69009bbf3b9b6cf522d8d783a1c654425848381affca5dab9284d8715fa2f9e34155374bafd923d75c219496cbe161c
+          sender:
+            type: string
+            description: signature sent to message
+            example: 'did:ethr:volta:0x03830466Ce257f9B798B0f27359D7639dFB6457D'
+          timestampNanos:
+            type: number
+            description: signature sent to message
+            example: 1649147198388
+          transactionId:
+            type: string
+            description: transactionId sent to message for idempotency
+            example: '1649147198388'
+          signatureValid:
+            type: boolean
+            description: transactionId sent to message for idempotency
+            example: true
+    ErrorMessage:
+      payload:
+        type: object
+        required:
+          - timestamp
+          - statusCode
+          - err
+        properties:
+          timestamp:
+            type: string
+          statusCode:
+            type: number
+            description: http code
+            example: 404
+          err:
+            type: object
+            required:
+              - code
+              - reason
+              - statusCode
+            properties:
+              code:
+                description: Error code outlining the type of error that has occurred
+                example: 'CHANNEL::NOT_FOUND'
+              reason:
+                description: Human-readable text detailing the reason of the error
+                type: string
+                example: Payload does not match the schema for the topic
+              statusCode:
+                example: 404
+                description: Any additional information attributed to the error
